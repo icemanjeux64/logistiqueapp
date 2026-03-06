@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Settings / LocalStorage ---
     let appSettings = JSON.parse(localStorage.getItem('fof_logi_settings')) || {
-        slName: 'Identification SL',
+        slName: 'Non identifié',
         effectifs: 0,
         initialSupply: 12000,
         shiftActive: false,
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         saveSettingsBtn.addEventListener('click', () => {
-            appSettings.slName = inputSlName.value || 'SL';
+            appSettings.slName = inputSlName.value || 'Non identifié';
             appSettings.effectifs = parseInt(inputEff.value) || 0;
             appSettings.initialSupply = parseInt(inputSupply.value) || 0;
 

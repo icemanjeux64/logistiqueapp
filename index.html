@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interface Logistique FOF</title>
     <link rel="stylesheet" href="style.css">
     <link
@@ -25,7 +25,7 @@
                 <div class="controls-row">
                     <div class="sl-info" id="sl-info-btn" title="Paramètres">
                         <i class="fa-solid fa-user-shield"></i>
-                        <span id="current-sl" class="val-current-sl">Identification SL</span>
+                        <span id="current-sl" class="val-current-sl">Non identifié</span>
                         <span id="shift-indicator" class="shift-badge" style="display:none;"><i
                                 class="fa-solid fa-circle"></i> EN SERVICE</span>
                         <span id="current-eff" class="val-current-eff">[0 EFF]</span>
@@ -86,13 +86,14 @@
             <div class="modal-content glass-panel">
                 <div class="modal-header">
                     <h2><i class="fa-solid fa-sliders"></i> PARAMÈTRES LOGISTIQUES</h2>
-                    <button id="close-settings" class="btn-close"><i class="fa-solid fa-xmark"></i></button>
+                    <button id="close-settings" class="btn-close" aria-label="Fermer" title="Fermer"><i
+                            class="fa-solid fa-xmark"></i></button>
                 </div>
 
                 <div class="modal-body">
                     <div class="input-group">
                         <label for="setting-sl-name">Nom du Squad Leader (SL)</label>
-                        <input type="text" id="setting-sl-name" placeholder="Ex: Dylanc_78">
+                        <input type="text" id="setting-sl-name" placeholder="Entrez votre nom">
                     </div>
 
                     <div class="input-group">
@@ -163,9 +164,11 @@
             </select>
 
             <div class="number-control">
-                <button class="btn-ctrl dec-btn"><i class="fa-solid fa-minus"></i></button>
+                <button class="btn-ctrl dec-btn" aria-label="Diminuer" title="Diminuer"><i
+                        class="fa-solid fa-minus"></i></button>
                 <input type="number" class="deployed-input digital-font" value="0" min="0" readonly>
-                <button class="btn-ctrl inc-btn"><i class="fa-solid fa-plus"></i></button>
+                <button class="btn-ctrl inc-btn" aria-label="Augmenter" title="Augmenter"><i
+                        class="fa-solid fa-plus"></i></button>
             </div>
 
             <input type="text" class="crew-input" placeholder="Équipage (Alpha)">
