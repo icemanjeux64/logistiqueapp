@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Interface Logistique FOF</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@500;700;900&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="tactical-theme">
+
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="top-nav glass-panel">
+            <div class="header-top-row">
+                <div class="logo-area">
+                    <i class="fa-solid fa-fire-flame-curved accent-color"></i>
+                    <h1>LOGISTIQUE FOF</h1>
+                </div>
+                <div class="controls-row">
+                    <div class="sl-info" id="sl-info-btn" title="Paramètres">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span id="current-sl" class="val-current-sl">Identification SL</span>
+                        <span id="shift-indicator" class="shift-badge" style="display:none;"><i
+                                class="fa-solid fa-circle"></i> EN SERVICE</span>
+                        <span id="current-eff" class="val-current-eff">[0 EFF]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="global-stats">
+                <div class="stat-box primary">
+                    <span class="stat-label">SUPPLY EN BASE</span>
+                    <span class="stat-value digital-font" id="global-supply">12000</span>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-box secondary">
+                        <span class="stat-label">DÉPLOYÉS</span>
+                        <span class="stat-value" id="global-deployed">25</span>
+                    </div>
+                    <div class="stat-box danger">
+                        <span class="stat-label">DÉTRUITS</span>
+                        <span class="stat-value" id="global-destroyed">0</span>
+                    </div>
+                    <div class="stat-box neutral">
+                        <span class="stat-label">EVASAN</span>
+                        <span class="stat-value" id="global-evasan">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search full width -->
+            <div class="controls-row">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="vehicle-search" placeholder="Rechercher...">
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="vehicle-list-container" id="vehicle-list">
+            <!-- Loading State -->
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Connexion au QG Logistique...</p>
+            </div>
+
+            <!-- Category Accordions will be injected here by app.js -->
+        </main>
+
+        <!-- Bottom Action Bar -->
+        <nav class="bottom-nav glass-panel">
+            <button class="nav-btn active" id="nav-fleet"><i class="fa-solid fa-truck"></i> Flotte</button>
+            <button class="nav-btn" id="nav-logs"><i class="fa-solid fa-clipboard-list"></i> Logs</button>
+            <button class="nav-btn" id="nav-settings"><i class="fa-solid fa-gear"></i> Paramètres</button>
+        </nav>
+
+        <!-- Settings Modal Overlay -->
+        <div id="settings-modal" class="modal-overlay hidden">
+            <div class="modal-content glass-panel">
+                <div class="modal-header">
+                    <h2><i class="fa-solid fa-sliders"></i> PARAMÈTRES LOGISTIQUES</h2>
+                    <button id="close-settings" class="btn-close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group">
+                        <label for="setting-sl-name">Nom du Squad Leader (SL)</label>
+                        <input type="text" id="setting-sl-name" placeholder="Ex: Dylanc_78">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="setting-eff">Effectifs Logistiques</label>
+                        <input type="number" id="setting-eff" placeholder="Ex: 4" min="0">
+                        <small class="helper-text">Nombre de joueurs affectés à la logistique.</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="setting-supply">Supply de Départ</label>
+                        <input type="number" id="setting-supply" placeholder="Ex: 12000">
+                        <small class="helper-text">Sert de base de calcul pour le Supply restant.</small>
+                    </div>
+
+                    <div class="input-group"
+                        style="margin-top: 10px; border-top: 1px solid var(--panel-border); padding-top: 15px;">
+                        <label>Gestion du Service</label>
+                        <button id="btn-shift-toggle" class="btn-primary"
+                            style="background-color: var(--accent-primary); margin-top: 5px;">
+                            <i class="fa-solid fa-play"></i> PRENDRE LE SERVICE
+                        </button>
+                        <small id="shift-status-text" class="helper-text"
+                            style="text-align: center; margin-top: 5px; display: block;">Hors service.</small>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-settings" class="btn-primary">SAUVEGARDER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template for a Category Group (No Accordion) -->
+    <template id="category-group-template">
+        <div class="category-group">
+            <div class="category-header">
+                <div class="cat-title-group">
+                    <i class="cat-icon"></i>
+                    <span class="cat-name">Nom Catégorie</span>
+                </div>
+                <div class="cat-stats">
+                    <span class="cat-deployed-count">0 Deployés</span>
+                    <span class="cat-total-count">/ 0 Total</span>
+                </div>
+            </div>
+            <!-- Grid container for vehicles of this category -->
+            <div class="category-grid">
+                <!-- Vehicle Cards go here -->
+            </div>
+        </div>
+    </template>
+
+    <!-- Template for a Vehicle Card (Grid Layout) -->
+    <template id="vehicle-card-template">
+        <article class="vehicle-card" data-category="">
+            <div class="card-top">
+                <span class="grade-badge">2CL</span>
+                <span class="cost-info"><i class="fa-solid fa-coins"></i> <span class="cost-val">110</span></span>
+            </div>
+
+            <h2 class="vehicle-name">Jeep/VT4 EM</h2>
+
+            <select class="status-select">
+                <option value="Opérationnel">🟢 OP</option>
+                <option value="Pas déployé">⚪ BASE</option>
+                <option value="Détruit">🔴 DETRUIT</option>
+            </select>
+
+            <div class="number-control">
+                <button class="btn-ctrl dec-btn"><i class="fa-solid fa-minus"></i></button>
+                <input type="number" class="deployed-input digital-font" value="0" min="0" readonly>
+                <button class="btn-ctrl inc-btn"><i class="fa-solid fa-plus"></i></button>
+            </div>
+
+            <input type="text" class="crew-input" placeholder="Équipage (Alpha)">
+        </article>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
